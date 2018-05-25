@@ -19,9 +19,9 @@ class PolyTreeNode
   end
   
   def parent=(node)
-    # if parent 
-    #   parent.remove_child(self)
-    # end
+    if parent 
+      parent.children.reject! {|child| child == self}
+    end
     
     @parent = node
     if !node.nil? && !node.children.include?(self)
@@ -30,10 +30,11 @@ class PolyTreeNode
   end
   
   def add_child(child)
-    
+      child.parent = self 
   end
   
   def remove_child(child)
-    
+    raise "error" unless children.include?(child)
+    child.parent = nil
   end
 end
