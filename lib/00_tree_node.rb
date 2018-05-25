@@ -1,3 +1,4 @@
+require 'byebug'
 class PolyTreeNode
   
   def initialize(value)
@@ -36,5 +37,22 @@ class PolyTreeNode
   def remove_child(child)
     raise "error" unless children.include?(child)
     child.parent = nil
+  end
+  
+  def dfs(target_value)
+    return self if self.value == target_value
+    return nil if self.children.empty?
+    
+    self.children.each do |child|
+      search_result = child.dfs(target_value)
+      return search_result unless search_result.nil? 
+    end
+    
+    nil
+  end
+  
+  
+  def to_s
+    self.children.map {|node| node.value}
   end
 end
